@@ -18,22 +18,21 @@ function Counter() {
   }
 
   function decreaseStep() {
-    if (step > 0) setStep((s) => s - 1);
+    if (step > 1) setStep((s) => s - 1);
   }
   function increaseCount() {
-    setCount((c) => c + 1);
+    setCount((c) => c + step);
   }
   function decreaseCount() {
-    if (count > 0) setCount((c) => c - 1);
+    setCount((c) => c - step);
   }
 
   function dateCalc() {
-    const countCalc = step * count * 86400000;
-    let currentDate = new Date().getTime();
-    const calcDate = currentDate - countCalc;
-    const calculatedDate = new Date(calcDate);
-    const conclusion = new Date(calculatedDate).toDateString();
-    return conclusion;
+    const countCalc = count * 86400000;
+    let calculatedDate = new Date(
+      new Date().getTime() + countCalc
+    ).toDateString();
+    return calculatedDate;
   }
   return (
     <>
@@ -85,9 +84,14 @@ function Counter() {
           +
         </button>
       </div>
-      <p style={{ marginTop: "1rem" }}>{`${
-        count * step
-      } days ago was ${dateCalc()}`}</p>
+      <p style={{ marginTop: "1rem" }}>
+        {count === 0
+          ? "Today is "
+          : count > 0
+          ? `${count} days from today is `
+          : `${Math.abs(count)} days ago was `}
+        <span>{dateCalc()}</span>
+      </p>
     </>
   );
 }
