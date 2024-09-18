@@ -13,13 +13,6 @@ function Counter() {
   const [step, setStep] = useState(1);
   const [count, setCount] = useState(1);
 
-  function increaseStep() {
-    setStep((s) => s + 1);
-  }
-
-  function decreaseStep() {
-    if (step > 1) setStep((s) => s - 1);
-  }
   function increaseCount() {
     setCount((c) => c + step);
   }
@@ -44,21 +37,17 @@ function Counter() {
           margin: "2,2",
           alignItems: "center",
           gap: "10px",
+          marginTop: "2rem",
         }}
       >
-        <button
-          style={{ width: "30px", height: "30px" }}
-          onClick={decreaseStep}
-        >
-          -
-        </button>
-        <p>Step: {step}</p>
-        <button
-          style={{ width: "30px", height: "30px" }}
-          onClick={increaseStep}
-        >
-          +
-        </button>
+        <input
+          type="range"
+          min="0"
+          max="10"
+          value={+step}
+          onChange={(e) => setStep(+e.target.value)}
+        ></input>
+        <span>Step: {step}</span>
       </div>
       <div
         style={{
@@ -76,7 +65,12 @@ function Counter() {
         >
           -
         </button>
-        <p>Count: {count}</p>
+        <input
+          type="text"
+          placeholder={+count}
+          value={+count}
+          onChange={(e) => setCount(+e.target.value)}
+        ></input>
         <button
           style={{ width: "30px", height: "30px" }}
           onClick={increaseCount}
